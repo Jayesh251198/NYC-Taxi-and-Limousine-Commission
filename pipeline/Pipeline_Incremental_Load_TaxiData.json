@@ -61,7 +61,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(activity('Get Metadata1').output.exists, false)\n",
+									"value": "@equals(length(activity('Get Metadata1').output.childItems), 0)\n",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -136,122 +136,8 @@
 									}
 								]
 							}
-						},
-						{
-							"name": "If Condition1_copy1",
-							"type": "IfCondition",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"expression": {
-									"value": "@equals(activity('Get Metadata1').output.exists, false)\n",
-									"type": "Expression"
-								},
-								"ifTrueActivities": [
-									{
-										"name": "Copy_TaxiData_Monthly_copy1",
-										"type": "Copy",
-										"dependsOn": [],
-										"policy": {
-											"timeout": "0.12:00:00",
-											"retry": 0,
-											"retryIntervalInSeconds": 30,
-											"secureOutput": false,
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"source": {
-												"type": "ParquetSource",
-												"storeSettings": {
-													"type": "HttpReadSettings",
-													"requestMethod": "GET"
-												},
-												"formatSettings": {
-													"type": "ParquetReadSettings"
-												}
-											},
-											"sink": {
-												"type": "ParquetSink",
-												"storeSettings": {
-													"type": "AzureBlobFSWriteSettings"
-												},
-												"formatSettings": {
-													"type": "ParquetWriteSettings"
-												}
-											},
-											"enableStaging": false,
-											"translator": {
-												"type": "TabularTranslator",
-												"typeConversion": true,
-												"typeConversionSettings": {
-													"allowDataTruncation": true,
-													"treatBooleanAsNumber": false
-												}
-											}
-										},
-										"inputs": [
-											{
-												"referenceName": "DS_HTTP_Source",
-												"type": "DatasetReference",
-												"parameters": {
-													"Year": {
-														"value": "@pipeline().parameters.Year",
-														"type": "Expression"
-													},
-													"Month": {
-														"value": "@item()",
-														"type": "Expression"
-													}
-												}
-											}
-										],
-										"outputs": [
-											{
-												"referenceName": "DS_ADLS_Target",
-												"type": "DatasetReference",
-												"parameters": {
-													"adls_container_name": "landing-data-zone",
-													"adls_directory": "Yellow_taxi_data"
-												}
-											}
-										]
-									}
-								]
-							}
 						}
 					]
-				}
-			},
-			{
-				"name": "Get Metadata2",
-				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DS_ADLS_Target",
-						"type": "DatasetReference"
-					},
-					"fieldList": [
-						"childItems"
-					],
-					"storeSettings": {
-						"type": "AzureBlobFSReadSettings",
-						"enablePartitionDiscovery": false
-					},
-					"formatSettings": {
-						"type": "ParquetReadSettings"
-					}
 				}
 			}
 		],
