@@ -1,0 +1,34 @@
+{
+	"name": "DS_ADLS_Target",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen2_Connection_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"adls_container_name": {
+				"type": "string"
+			},
+			"adls_directory": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().adls_directory",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().adls_container_name",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

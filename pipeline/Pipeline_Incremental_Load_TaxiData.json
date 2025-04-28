@@ -1,0 +1,174 @@
+{
+	"name": "Pipeline_Incremental_Load_TaxiData",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@createArray('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')\n\n",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Get_Metadata_File_Existence",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DS_ADLS_Target",
+									"type": "DatasetReference",
+									"parameters": {
+										"adls_container_name": "landing-data-zone",
+										"adls_directory": "Yellow_taxi_data"
+									}
+								},
+								"fieldList": [
+									"childItems"
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							}
+						},
+						{
+							"name": "If_File_Exists_Condition",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Get_Metadata_File_Existence",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@equals(length(activity('Get_Metadata_File_Existence').output.childItems), 0)\n",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Set Variable - File Exists Status",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "FileStatus",
+											"value": "\"File already exists and was not copied.\""
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Copy_Taxi_Data",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "ParquetSource",
+												"storeSettings": {
+													"type": "HttpReadSettings",
+													"requestMethod": "GET"
+												},
+												"formatSettings": {
+													"type": "ParquetReadSettings"
+												}
+											},
+											"sink": {
+												"type": "ParquetSink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												},
+												"formatSettings": {
+													"type": "ParquetWriteSettings"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_HTTP_Source",
+												"type": "DatasetReference",
+												"parameters": {
+													"Year": {
+														"value": "@pipeline().parameters.Year",
+														"type": "Expression"
+													},
+													"Month": {
+														"value": "@item()",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_ADLS_Target",
+												"type": "DatasetReference",
+												"parameters": {
+													"adls_container_name": "landing-data-zone",
+													"adls_directory": "@pipeline().parameters.Year"
+												}
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Year": {
+				"type": "string",
+				"defaultValue": "2024"
+			}
+		},
+		"variables": {
+			"FileStatus": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

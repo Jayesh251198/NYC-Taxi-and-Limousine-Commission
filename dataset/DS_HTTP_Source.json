@@ -1,0 +1,30 @@
+{
+	"name": "DS_HTTP_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "NYC_Web_Connection_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Year": {
+				"type": "string"
+			},
+			"Month": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "trip-data/yellow_tripdata_@{dataset().Year}-@{dataset().Month}.parquet\n",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
