@@ -15,7 +15,7 @@
 					"isSequential": false,
 					"activities": [
 						{
-							"name": "Get Metadata1",
+							"name": "Get_Metadata_File_Existence",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
@@ -40,6 +40,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -48,11 +49,11 @@
 							}
 						},
 						{
-							"name": "If Condition1",
+							"name": "If_File_Exists_Condition",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Get Metadata1",
+									"activity": "Get_Metadata_File_Existence",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -61,12 +62,28 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(length(activity('Get Metadata1').output.childItems), 0)\n",
+									"value": "@equals(length(activity('Get_Metadata_File_Existence').output.childItems), 0)\n",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "Set Variable - File Exists Status",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "FileStatus",
+											"value": "\"File already exists and was not copied.\""
+										}
+									}
+								],
 								"ifTrueActivities": [
 									{
-										"name": "Copy_TaxiData_Monthly",
+										"name": "Copy_Taxi_Data",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
@@ -145,6 +162,11 @@
 			"Year": {
 				"type": "string",
 				"defaultValue": "2024"
+			}
+		},
+		"variables": {
+			"FileStatus": {
+				"type": "String"
 			}
 		},
 		"annotations": []
