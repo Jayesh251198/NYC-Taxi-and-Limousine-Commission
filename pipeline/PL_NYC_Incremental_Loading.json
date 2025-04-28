@@ -1,0 +1,40 @@
+{
+	"name": "PL_NYC_Incremental_Loading",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetMetadata_Source",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_HTTP_Source",
+						"type": "DatasetReference",
+						"parameters": {
+							"Year": "2023",
+							"Month": "01"
+						}
+					},
+					"fieldList": [],
+					"storeSettings": {
+						"type": "HttpReadSettings",
+						"requestMethod": "GET",
+						"requestTimeout": ""
+					},
+					"formatSettings": {
+						"type": "ParquetReadSettings"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
