@@ -146,7 +146,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"adls_container_name": "landing-data-zone",
-													"adls_directory": "Yellow_taxi_data"
+													"adls_directory": "@pipeline().parameters.Year"
 												}
 											}
 										]
