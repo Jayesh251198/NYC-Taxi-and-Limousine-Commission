@@ -32,15 +32,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"adls_container_name": "landingzone",
-										"adls_directory": "Yellow Taxidata"
+										"adls_directory": {
+											"value": "@item()",
+											"type": "Expression"
+										}
 									}
 								},
-								"fieldList": [
-									"childItems"
-								],
+								"fieldList": [],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
