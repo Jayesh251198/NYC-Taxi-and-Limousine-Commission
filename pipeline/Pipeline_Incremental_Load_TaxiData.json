@@ -31,8 +31,8 @@
 									"referenceName": "DS_ADLS_Target",
 									"type": "DatasetReference",
 									"parameters": {
-										"adls_container_name": "landing-data-zone",
-										"adls_directory": "Yellow_taxi_data"
+										"adls_container_name": "landingzone",
+										"adls_directory": "Yellow Taxidata"
 									}
 								},
 								"fieldList": [
