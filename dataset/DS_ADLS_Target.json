@@ -18,10 +18,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": {
-					"value": "@dataset().adls_directory",
-					"type": "Expression"
-				},
 				"fileSystem": {
 					"value": "@dataset().adls_container_name",
 					"type": "Expression"
