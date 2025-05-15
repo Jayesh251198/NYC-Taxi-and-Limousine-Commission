@@ -1,9 +1,0 @@
-{
-	"name": "nyctaxijayeshadf",
-	"location": "eastus",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "5b50cfe2-be6e-4c4e-9973-de050a550b01",
-		"tenantId": "4ca0c0ee-622e-4384-a175-2442accfd88b"
-	}
-}
