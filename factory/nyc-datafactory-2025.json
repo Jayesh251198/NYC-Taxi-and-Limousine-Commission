@@ -1,0 +1,9 @@
+{
+	"name": "nyc-datafactory-2025",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3a307771-8e09-4c17-ab81-4b17a351fdbc",
+		"tenantId": "c0ec3cb8-1b38-4364-989c-20d4440fdb7c"
+	}
+}
