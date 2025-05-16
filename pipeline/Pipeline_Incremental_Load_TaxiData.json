@@ -145,8 +145,11 @@
 												"referenceName": "DS_ADLS_Target",
 												"type": "DatasetReference",
 												"parameters": {
-													"adls_container_name": "landing-data-zone",
-													"adls_directory": "@pipeline().parameters.Year"
+													"adls_container_name": "landingzone",
+													"adls_directory": {
+														"value": "@concat(pipeline().parameters.Year, '/', item())",
+														"type": "Expression"
+													}
 												}
 											}
 										]

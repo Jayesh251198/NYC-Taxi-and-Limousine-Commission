@@ -19,7 +19,7 @@
 			"location": {
 				"type": "HttpServerLocation",
 				"relativeUrl": {
-					"value": "trip-data/yellow_tripdata_@{dataset().Year}-@{dataset().Month}.parquet\n",
+					"value": "yellow_tripdata_@{dataset().Year}-@{dataset().Month}.parquet\n",
 					"type": "Expression"
 				}
 			},
