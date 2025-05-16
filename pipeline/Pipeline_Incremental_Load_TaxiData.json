@@ -146,10 +146,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"adls_container_name": "landingzone",
-													"adls_directory": {
-														"value": "@concat(pipeline().parameters.Year, '/', item())",
-														"type": "Expression"
-													}
+													"adls_directory": "Yellow Taxidata/2024"
 												}
 											}
 										]
