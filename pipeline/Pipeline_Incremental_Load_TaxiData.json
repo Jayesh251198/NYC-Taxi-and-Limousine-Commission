@@ -32,7 +32,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"adls_container_name": "landingzone",
-										"adls_directory": "Yellow Taxidata"
+										"adls_directory": "Yellow_Taxidata"
 									}
 								},
 								"fieldList": [
@@ -62,13 +62,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(length(activity('Get_Metadata_File_Existence').output.childItems), 0)\n",
+									"value": "@greater(length(activity('Get_Metadata_File_Existence').output.childItems), 0)\n",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
 									{
 										"name": "Set Variable - File Exists Status",
 										"type": "SetVariable",
+										"state": "Inactive",
+										"onInactiveMarkAs": "Succeeded",
 										"dependsOn": [],
 										"policy": {
 											"secureOutput": false,
@@ -146,7 +148,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"adls_container_name": "landingzone",
-													"adls_directory": "Yellow Taxidata/2024"
+													"adls_directory": "Yellow_Taxidata/2024"
 												}
 											}
 										]
