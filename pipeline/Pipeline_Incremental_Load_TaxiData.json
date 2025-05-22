@@ -32,7 +32,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"adls_container_name": "landingzone",
-										"adls_directory": "Yellow Taxidata"
+										"adls_directory": "Yellow_Taxidata"
 									}
 								},
 								"fieldList": [
@@ -146,7 +146,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"adls_container_name": "landingzone",
-													"adls_directory": "Yellow Taxidata/2024"
+													"adls_directory": "Yellow_Taxidata/2024"
 												}
 											}
 										]
