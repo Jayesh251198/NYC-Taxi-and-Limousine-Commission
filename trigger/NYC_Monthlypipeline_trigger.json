@@ -10,7 +10,18 @@
 				"frequency": "Month",
 				"interval": 1,
 				"startTime": "2025-06-01T12:00:00",
-				"timeZone": "India Standard Time"
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						0
+					],
+					"monthDays": [
+						1
+					]
+				}
 			}
 		}
 	}
